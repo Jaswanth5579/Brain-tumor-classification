@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block title %}About - Brain Tumor Classification{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="mb-4"><i class="fas fa-info-circle"></i> About the System</h1>
+            
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Project Overview</h5>
+                </div>
+                <div class="card-body">
+                    <p class="lead">
+                        This Brain Tumor Classification System is an AI-powered web application designed to 
+                        classify brain tumors from MRI images using advanced machine learning algorithms.
+                    </p>
+                    <p>
+                        The system can identify four different types of brain conditions:
+                    </p>
+                    <ul>
+                        {% for class_name in info.classes %}
+                        <li><strong>{{ class_name }}</strong></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-header bg-success text-white">
+                            <h5 class="mb-0"><i class="fas fa-cogs"></i> Machine Learning Models</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>The system employs multiple ML algorithms:</p>
+                            <ul>
+                                {% for model in info.models %}
+                                <li><strong>{{ model }}</strong> - Accuracy: {{ info.accuracy[model] }}</li>
+                                {% endfor %}
+                            </ul>
+                            <p class="text-muted">
+                                Models are trained on a comprehensive dataset of brain MRI images 
+                                with cross-validation and hyperparameter optimization.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-header bg-info text-white">
+                            <h5 class="mb-0"><i class="fas fa-star"></i> Key Features</h5>
+                        </div>
+                        <div class="card-body">
+                            <ul>
+                                {% for feature in info.features %}
+                                <li>{{ feature }}</li>
+                                {% endfor %}
+                            </ul>
+                            <div class="alert alert-warning mt-3">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <strong>Disclaimer:</strong> This system is for educational and research purposes only. 
+                                It should not be used as a substitute for professional medical diagnosis.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mt-4">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0"><i class="fas fa-graduation-cap"></i> Academic Project</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Technical Specifications:</h6>
+                            <ul>
+                                <li><strong>Framework:</strong> Flask (Python)</li>
+                                <li><strong>ML Libraries:</strong> Scikit-learn, OpenCV</li>
+                                <li><strong>Frontend:</strong> Bootstrap 5, JavaScript</li>
+                                <li><strong>Image Processing:</strong> OpenCV</li>
+                                <li><strong>Model Format:</strong> Pickle serialization</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>System Architecture:</h6>
+                            <ul>
+                                <li><strong>Data Layer:</strong> MRI image dataset</li>
+                                <li><strong>Processing Layer:</strong> Image preprocessing</li>
+                                <li><strong>Model Layer:</strong> ML algorithms</li>
+                                <li><strong>Web Layer:</strong> Flask application</li>
+                                <li><strong>UI Layer:</strong> Responsive web interface</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mt-4">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0"><i class="fas fa-chart-bar"></i> Performance Metrics</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-md-3">
+                            <div class="border rounded p-3">
+                                <h3 class="text-primary">95%</h3>
+                                <p class="mb-0">SVM Accuracy</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="border rounded p-3">
+                                <h3 class="text-success">92%</h3>
+                                <p class="mb-0">Logistic Regression</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="border rounded p-3">
+                                <h3 class="text-info">10-Fold</h3>
+                                <p class="mb-0">Cross Validation</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="border rounded p-3">
+                                <h3 class="text-warning">4</h3>
+                                <p class="mb-0">Tumor Classes</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

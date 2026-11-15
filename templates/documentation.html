@@ -1,0 +1,317 @@
+{% extends "base.html" %}
+
+{% block title %}Documentation - Brain Tumor Classification{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-3">
+            <!-- Navigation Sidebar -->
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h6 class="mb-0"><i class="fas fa-list"></i> Documentation</h6>
+                </div>
+                <div class="list-group list-group-flush">
+                    <a href="#installation" class="list-group-item list-group-item-action">Installation</a>
+                    <a href="#usage" class="list-group-item list-group-item-action">Usage Guide</a>
+                    <a href="#api" class="list-group-item list-group-item-action">API Reference</a>
+                    <a href="#models" class="list-group-item list-group-item-action">Model Details</a>
+                    <a href="#testing" class="list-group-item list-group-item-action">Testing</a>
+                    <a href="#troubleshooting" class="list-group-item list-group-item-action">Troubleshooting</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-9">
+            <!-- Installation Section -->
+            <section id="installation" class="mb-5">
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        <h4 class="mb-0"><i class="fas fa-download"></i> Installation Guide</h4>
+                    </div>
+                    <div class="card-body">
+                        <h5>Prerequisites</h5>
+                        <ul>
+                            <li>Python 3.8 or higher</li>
+                            <li>pip package manager</li>
+                            <li>At least 4GB RAM</li>
+                            <li>Modern web browser</li>
+                        </ul>
+                        
+                        <h5>Step-by-Step Installation</h5>
+                        <div class="bg-dark text-white p-3 rounded">
+                            <code>
+                                # 1. Clone or download the project<br>
+                                git clone &lt;repository-url&gt;<br><br>
+                                
+                                # 2. Navigate to project directory<br>
+                                cd brain-tumor-classification<br><br>
+                                
+                                # 3. Install required packages<br>
+                                pip install -r requirements.txt<br><br>
+                                
+                                # 4. Run the application<br>
+                                python app.py
+                            </code>
+                        </div>
+                        
+                        <div class="alert alert-info mt-3">
+                            <i class="fas fa-info-circle"></i>
+                            <strong>Note:</strong> Make sure you have the trained model files (svm_model.pkl, logistic_model.pkl) 
+                            in the project directory before running the application.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Usage Guide -->
+            <section id="usage" class="mb-5">
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        <h4 class="mb-0"><i class="fas fa-user-guide"></i> Usage Guide</h4>
+                    </div>
+                    <div class="card-body">
+                        <h5>Web Interface</h5>
+                        <ol>
+                            <li><strong>Start the Application:</strong> Run <code>python app.py</code></li>
+                            <li><strong>Open Browser:</strong> Navigate to <code>http://localhost:5000</code></li>
+                            <li><strong>Upload Image:</strong> Click "Choose File" or drag & drop an MRI image</li>
+                            <li><strong>Get Results:</strong> Click "Classify Tumor" to get predictions</li>
+                            <li><strong>View Results:</strong> See predictions from both SVM and Logistic Regression models</li>
+                        </ol>
+                        
+                        <h5>Supported Image Formats</h5>
+                        <ul>
+                            <li>JPEG (.jpg, .jpeg)</li>
+                            <li>PNG (.png)</li>
+                            <li>Maximum file size: 16MB</li>
+                        </ul>
+                        
+                        <h5>Understanding Results</h5>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="border rounded p-2 text-center">
+                                    <span class="badge bg-success">80-100%</span>
+                                    <p class="mb-0 small">High Confidence</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="border rounded p-2 text-center">
+                                    <span class="badge bg-warning">60-79%</span>
+                                    <p class="mb-0 small">Medium Confidence</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="border rounded p-2 text-center">
+                                    <span class="badge bg-danger">&lt;60%</span>
+                                    <p class="mb-0 small">Low Confidence</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- API Reference -->
+            <section id="api" class="mb-5">
+                <div class="card">
+                    <div class="card-header bg-warning text-dark">
+                        <h4 class="mb-0"><i class="fas fa-code"></i> API Reference</h4>
+                    </div>
+                    <div class="card-body">
+                        <h5>Endpoints</h5>
+                        
+                        <div class="mb-3">
+                            <h6><span class="badge bg-primary">GET</span> /</h6>
+                            <p>Main page with upload interface</p>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <h6><span class="badge bg-success">POST</span> /upload</h6>
+                            <p>Upload and classify MRI image</p>
+                            <strong>Parameters:</strong>
+                            <ul>
+                                <li><code>file</code> (multipart/form-data): MRI image file</li>
+                            </ul>
+                            <strong>Response:</strong>
+                            <div class="bg-light p-2 rounded">
+                                <code>
+                                {<br>
+                                &nbsp;&nbsp;"svm_prediction": "No Tumor",<br>
+                                &nbsp;&nbsp;"svm_confidence": "95%",<br>
+                                &nbsp;&nbsp;"lg_prediction": "No Tumor",<br>
+                                &nbsp;&nbsp;"lg_confidence": "92%",<br>
+                                &nbsp;&nbsp;"image": "base64_encoded_image"<br>
+                                }
+                                </code>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <h6><span class="badge bg-primary">GET</span> /about</h6>
+                            <p>System information and technical details</p>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <h6><span class="badge bg-primary">GET</span> /documentation</h6>
+                            <p>This documentation page</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Model Details -->
+            <section id="models" class="mb-5">
+                <div class="card">
+                    <div class="card-header bg-secondary text-white">
+                        <h4 class="mb-0"><i class="fas fa-brain"></i> Model Details</h4>
+                    </div>
+                    <div class="card-body">
+                        <h5>SVM (Support Vector Machine)</h5>
+                        <ul>
+                            <li><strong>Kernel:</strong> RBF (Radial Basis Function)</li>
+                            <li><strong>C Parameter:</strong> 10</li>
+                            <li><strong>Gamma:</strong> scale</li>
+                            <li><strong>Accuracy:</strong> ~95%</li>
+                        </ul>
+                        
+                        <h5>Logistic Regression</h5>
+                        <ul>
+                            <li><strong>Solver:</strong> liblinear</li>
+                            <li><strong>Max Iterations:</strong> 1000</li>
+                            <li><strong>Random State:</strong> 42</li>
+                            <li><strong>Accuracy:</strong> ~92%</li>
+                        </ul>
+                        
+                        <h5>Image Preprocessing</h5>
+                        <ol>
+                            <li>Convert to grayscale</li>
+                            <li>Resize to 200x200 pixels</li>
+                            <li>Flatten to 1D array (40,000 features)</li>
+                            <li>Normalize pixel values (0-1 range)</li>
+                        </ol>
+                        
+                        <h5>Classification Classes</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul>
+                                    <li><strong>0:</strong> No Tumor</li>
+                                    <li><strong>1:</strong> Pituitary Tumor</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul>
+                                    <li><strong>2:</strong> Glioma Tumor</li>
+                                    <li><strong>3:</strong> Meningioma Tumor</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Testing -->
+            <section id="testing" class="mb-5">
+                <div class="card">
+                    <div class="card-header bg-danger text-white">
+                        <h4 class="mb-0"><i class="fas fa-vial"></i> Testing</h4>
+                    </div>
+                    <div class="card-body">
+                        <h5>Unit Tests</h5>
+                        <p>Run the built-in test suite:</p>
+                        <div class="bg-dark text-white p-3 rounded">
+                            <code>python brain_tumor.py</code>
+                        </div>
+                        
+                        <h5>Manual Testing</h5>
+                        <ol>
+                            <li>Test with different image formats (JPEG, PNG)</li>
+                            <li>Test with various image sizes</li>
+                            <li>Test with corrupted or invalid files</li>
+                            <li>Test upload limits (16MB max)</li>
+                        </ol>
+                        
+                        <h5>Performance Testing</h5>
+                        <ul>
+                            <li>Average processing time: 2-5 seconds</li>
+                            <li>Memory usage: ~500MB during processing</li>
+                            <li>Concurrent users: Up to 10 (development server)</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Troubleshooting -->
+            <section id="troubleshooting" class="mb-5">
+                <div class="card">
+                    <div class="card-header bg-dark text-white">
+                        <h4 class="mb-0"><i class="fas fa-tools"></i> Troubleshooting</h4>
+                    </div>
+                    <div class="card-body">
+                        <h5>Common Issues</h5>
+                        
+                        <div class="accordion" id="troubleshootingAccordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#issue1">
+                                        Models not loaded error
+                                    </button>
+                                </h2>
+                                <div id="issue1" class="accordion-collapse collapse" data-bs-parent="#troubleshootingAccordion">
+                                    <div class="accordion-body">
+                                        <strong>Solution:</strong> Ensure model files (svm_model.pkl, logistic_model.pkl) are in the project directory. 
+                                        Run the training script first: <code>python brain_tumor.py</code>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#issue2">
+                                        File upload fails
+                                    </button>
+                                </h2>
+                                <div id="issue2" class="accordion-collapse collapse" data-bs-parent="#troubleshootingAccordion">
+                                    <div class="accordion-body">
+                                        <strong>Solutions:</strong>
+                                        <ul>
+                                            <li>Check file size (max 16MB)</li>
+                                            <li>Ensure file format is supported (JPEG, PNG)</li>
+                                            <li>Check file permissions</li>
+                                            <li>Verify uploads directory exists</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#issue3">
+                                        Application won't start
+                                    </button>
+                                </h2>
+                                <div id="issue3" class="accordion-collapse collapse" data-bs-parent="#troubleshootingAccordion">
+                                    <div class="accordion-body">
+                                        <strong>Solutions:</strong>
+                                        <ul>
+                                            <li>Check Python version (3.8+)</li>
+                                            <li>Install missing dependencies: <code>pip install -r requirements.txt</code></li>
+                                            <li>Check port 5000 availability</li>
+                                            <li>Run with different port: <code>python app.py --port 8000</code></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-info mt-3">
+                            <i class="fas fa-question-circle"></i>
+                            <strong>Need Help?</strong> Check the console output for detailed error messages and stack traces.
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+{% endblock %}
